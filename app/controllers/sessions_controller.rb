@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_action :authenticate_request, only: :create
   def create
-    user = User.find_by(login: params[:login])
+    user = User.find_by(email: params[:email])
 
     if user
       if user.authenticate(params[:password])
@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
         render json: { error: 'Invalid password' }, status: :unauthorized
       end
     else
-      user = User.create(login: params[:login], password: params[:password])
+      user = User.create(email: params[:email], password: params[:password])
       if user.valid?
         token = user.generate_jwt
         render json: { token: token }, status: :created
