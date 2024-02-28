@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
       end
     else
       user = User.create(email: params[:email], password: params[:password])
+
       if user.valid?
         token = user.generate_jwt
         render json: { token: token }, status: :created
