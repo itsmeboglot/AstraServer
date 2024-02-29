@@ -15,7 +15,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  url: postgres://default:Z27SDypxiAhT@ep-proud-moon-a2t2fgmx-pooler.eu-central-1.aws.neon.tech:5432/verceldb?sslmode=require&options=endpoint%3Dep-proud-moon-a2t2fgmx
+  url: postgresql://postgres:6G*-5*Ae5BDgA*gbe*6G5-4g51CGbce-@roundhouse.proxy.rlwy.net:42757/railway
   pool: 5
 
 development:
