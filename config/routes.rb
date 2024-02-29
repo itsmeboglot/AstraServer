@@ -10,6 +10,15 @@ Rails.application.routes.draw do
 
   get '/hello', to: 'greetings#hello'
 
+  # USER
+
   post '/register', to: 'sessions#create'
   post '/login', to: 'sessions#verify'
+
+  # GROUPS
+
+  get '/groups', to: 'groups#get_groups'
+  post '/groups', to: 'groups#add'
+  delete '/groups', to: 'groups#remove'
+  patch '/groups', to: 'groups#update'
 end
