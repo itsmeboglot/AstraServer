@@ -10,15 +10,21 @@ Rails.application.routes.draw do
 
   get '/hello', to: 'greetings#hello'
 
-  # USER
+  namespace :api do
+    namespace :v1 do
 
-  post '/register', to: 'sessions#create'
-  post '/login', to: 'sessions#verify'
+      # USER
+      match '/register', to: 'sessions#create', via: :post
+      match '/login',    to: 'sessions#verify', via: :post
 
-  # GROUPS
+      # Groups | api/v1/groups
+      resources :groups, only: %i[index create update] do
+        # groups/:id
+        member do
+          delete '/', to: 'groups#delete'
+        end
+      end
 
-  get '/groups', to: 'groups#get_groups'
-  post '/groups', to: 'groups#add'
-  delete '/groups', to: 'groups#remove'
-  patch '/groups', to: 'groups#update'
+    end
+  end
 end
