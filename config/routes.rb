@@ -10,5 +10,6 @@ Rails.application.routes.draw do
 
   get '/hello', to: 'greetings#hello'
 
-  post '/login', to: 'sessions#create'
+  post '/register', to: 'sessions#create'
+  post '/verify', to: 'sessions#verify'
 end
