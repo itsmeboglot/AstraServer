@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  get '/hello', to: 'greetings#hello'
-
   namespace :api do
     namespace :v1 do
+
+      get '/hello', to: 'greetings#hello'
 
       # USER
       match '/register', to: 'sessions#create', via: :post
