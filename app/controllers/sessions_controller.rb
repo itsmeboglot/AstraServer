@@ -12,6 +12,8 @@ class SessionsController < ApplicationController
       else
         render json: { error: user.errors.full_messages.join(', ') }, status: :unauthorized
       end
+    else
+      render json: { error: 'User already exists' }, status: :unauthorized
     end
   end
 
