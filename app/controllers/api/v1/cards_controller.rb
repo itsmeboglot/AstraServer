@@ -32,15 +32,6 @@ module Api
         params.permit(%i[word definition example])
       end
 
-      def group_exists(group, user)
-        if group && group.belongs_to(user)
-          return true
-        end
-
-        render json: { error: "No such group with id <#{params[:group_id]}>" }, status: :bad_request
-        false
-      end
-
       def bunch_exists(bunch, group)
         if bunch && bunch.belongs_to(group) && group.belongs_to(@current_user)
           return true
