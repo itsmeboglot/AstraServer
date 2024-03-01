@@ -10,26 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_27_134949) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_01_152818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "cards", force: :cascade do |t|
-    t.bigint "group_id", null: false
+  create_table "bunches", id: :string, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "group_id", null: false
+    t.index ["group_id"], name: "index_bunches_on_group_id"
+  end
+
+  create_table "cards", id: :string, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "word"
     t.string "definition"
     t.string "example"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_cards_on_group_id"
+    t.string "bunch_id", null: false
+    t.index ["bunch_id"], name: "index_cards_on_bunch_id"
   end
 
-  create_table "groups", force: :cascade do |t|
-    t.bigint "user_id", null: false
+  create_table "groups", id: :string, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
@@ -41,6 +50,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_27_134949) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "cards", "groups"
+  add_foreign_key "bunches", "groups"
+  add_foreign_key "cards", "bunches"
   add_foreign_key "groups", "users"
 end

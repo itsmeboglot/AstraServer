@@ -13,16 +13,19 @@ Rails.application.routes.draw do
 
       get '/hello', to: 'greetings#hello'
 
-      # USER
+      # Users | /api/v1
       match '/register', to: 'sessions#create', via: :post
       match '/login',    to: 'sessions#verify', via: :post
 
-      # Groups | api/v1/groups
+      # Groups | /api/v1/groups
       resources :groups, only: %i[index create update] do
-        # groups/:id
+        # /:id
         member do
           delete '/', to: 'groups#delete'
         end
+
+        # /:id/cards
+        resources :cards
       end
 
     end

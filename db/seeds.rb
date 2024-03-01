@@ -9,7 +9,8 @@
 #   end
 
 1.times do
-  user = User.create(login: SecureRandom.hex)
+  user = User.create(email: "test", password: "test")
   group = Group.create(name: 'test_name', description: 'test_description', user: user)
-  Card.create(word: "test_word", definition: "test_definition", example: "test_example", group: group)
+  bunch = Bunch.create(name: "test_name", description: "test_description", group: group)
+  Card.create(word: "test_word", definition: "test_definition", example: "test_example", bunch: bunch)
 end

@@ -16,10 +16,10 @@ module Api
             token = user.generate_jwt
             render json: { token: token }, status: :created
           else
-            render json: { error: user.errors.full_messages.join(', ') }, status: :unauthorized
+            render json: { error: user.errors.full_messages.join(', ') }, status: :bad_request
           end
         else
-          render json: { error: 'User already exists' }, status: :unauthorized
+          render json: { error: 'User already exists' }, status: :bad_request
         end
       end
 
@@ -31,10 +31,10 @@ module Api
             token = user.generate_jwt
             render json: { token: token }
           else
-            render json: { error: 'Invalid password' }, status: :unauthorized
+            render json: { error: 'Invalid password' }, status: :bad_request
           end
         else
-          render json: { error: 'User does not exist' }, status: :unauthorized
+          render json: { error: 'User does not exist' }, status: :bad_request
         end
       end
 

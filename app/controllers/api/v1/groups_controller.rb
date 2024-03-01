@@ -27,12 +27,12 @@ module Api
             render json: { error: 'Problem with deleting group' }, status: :internal_server_error
           end
         else
-          render json: { error: "Group with id <#{params[:id]}> does not exist" }, status: :unprocessable_entity
+          render json: { error: "Group with id <#{params[:id]}> does not exist" }, status: :bad_request
         end
       end
 
       def update #:id, :name, :description
-        group = Group.find(params[:id])
+        group = Group.find_by(id: params[:id])
 
         update_params = { name: params[:name] }
 
@@ -47,7 +47,7 @@ module Api
             render json: {error: 'Group update failed'}, status: :unprocessable_entity
           end
         else
-          render json: {error: "No such group with id <#{params[:id]}>"}, status: :unprocessable_entity
+          render json: {error: "No such group with id <#{params[:id]}>"}, status: :bad_request
         end
       end
 

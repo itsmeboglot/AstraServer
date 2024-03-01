@@ -1,8 +1,7 @@
 class Group < ApplicationRecord
 
   belongs_to :user
-  has_many :cards, dependent: :destroy
-
+  has_many :bunches, dependent: :destroy
   validates :name, presence: true
 
   # @return [true, false]
