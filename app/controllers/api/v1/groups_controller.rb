@@ -33,10 +33,15 @@ module Api
 
       def update #:id, :name, :description
         group = Group.find(params[:id])
-        description = params[:description]
+
+        update_params = { name: params[:name] }
+
+        if params[:description].present?
+          update_params[:description] = params[:description]
+        end
 
         if group && group.is_mine(@current_user)
-          if group.update(name: params[:name], description: description.present? ? description : nil)
+          if group.update(update_params)
             render json: group.as_json, status: :ok
           else
             render json: {error: 'Group update failed'}, status: :unprocessable_entity
