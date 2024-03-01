@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_152818) do
     t.index ["group_id"], name: "index_bunches_on_group_id"
   end
 
-  create_table "cards", id: :string, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "cards", force: :cascade do |t|
     t.string "word"
     t.string "definition"
     t.string "example"

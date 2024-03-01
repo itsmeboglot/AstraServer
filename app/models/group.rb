@@ -5,8 +5,8 @@ class Group < ApplicationRecord
   validates :name, presence: true
 
   # @return [true, false]
-  def is_mine(user)
-    user.id == self.user.id
+  def belongs_to(user)
+    user.id == self.user_id
   end
 
   def as_json(options = {})

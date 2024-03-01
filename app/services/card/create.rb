@@ -1,20 +1,21 @@
 # frozen_string_literal: true
+
 class Card
   class Create < Base
 
     attr_reader :card
 
-    def self.call(params, group)
-      new(params, group).call
+    def self.call(params, bunch)
+      new(params, bunch).call
     end
 
     def call
       ActiveRecord::Base.transaction do
         prepare_card
         set_attributes
-        group.save
+        card.save
 
-        collect_errors(group)
+        collect_errors(card)
       end
 
       self
@@ -22,13 +23,13 @@ class Card
 
     private
 
-    attr_reader :word, :definition, :example, :group
+    attr_reader :word, :definition, :example, :bunch
 
-    def initialize(params, group)
+    def initialize(params, bunch)
       @word = params[:word]
       @description = params[:definition]
       @example = params[:example]
-      @group = group
+      @bunch = bunch
 
       super()
     end
@@ -41,7 +42,7 @@ class Card
       card.word = word
       card.definition = definition
       card.example = example
-      card.group = group
+      card.bunch = bunch
     end
 
   end

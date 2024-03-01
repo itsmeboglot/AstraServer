@@ -24,8 +24,11 @@ Rails.application.routes.draw do
           delete '/', to: 'groups#delete'
         end
 
-        # /:id/cards
-        resources :cards
+        # /:group_id/bunches
+        resources :bunches do
+          # /:group_id/bunches/:bunch_id
+          resources :cards
+        end
       end
 
     end

@@ -20,7 +20,7 @@ module Api
       def delete #:id
         group = Group.find_by(id: params[:id])
 
-        if group && group.is_mine(@current_user)
+        if group && group.belongs_to(@current_user)
           if group.destroy
             render status: :ok
           else
@@ -40,7 +40,7 @@ module Api
           update_params[:description] = params[:description]
         end
 
-        if group && group.is_mine(@current_user)
+        if group && group.belongs_to(@current_user)
           if group.update(update_params)
             render json: group.as_json, status: :ok
           else
