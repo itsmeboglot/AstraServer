@@ -3,7 +3,7 @@ require 'jwt'
 module JwtAuth
   SECRET_KEY = Rails.application.secret_key_base
 
-  def self.encode(payload, exp = 5.minutes.from_now)
+  def self.encode(payload, exp = 24.hours.from_now)
     payload[:exp] = exp.to_i
     JWT.encode(payload, SECRET_KEY)
   end
