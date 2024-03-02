@@ -24,11 +24,11 @@ Rails.application.routes.draw do
           delete '/', to: 'groups#delete'
         end
 
-        # /:group_id/bunches
+        # Bunches | /:group_id/bunches
         resources :bunches, only: %i[index create]
       end
 
-      # Bunches | /api/v1/bunches
+      # Cards | /api/v1/bunches/:bunch_id
       resources :bunches, only: %i[] do
         resources :cards
       end
