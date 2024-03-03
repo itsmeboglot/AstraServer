@@ -5,7 +5,7 @@ class Group < ApplicationRecord
   validates :name, presence: true
 
   # @return [true, false]
-  def belongs_to(user)
+  def belongs_to?(user)
     user.id == self.user_id
   end
 

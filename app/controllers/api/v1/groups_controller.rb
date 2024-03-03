@@ -34,13 +34,7 @@ module Api
       def update #:id, :name, :description
         group = Group.find_by(id: params[:id])
 
-        update_params = { name: params[:name] }
-
-        if params[:description].present?
-          update_params[:description] = params[:description]
-        end
-
-        if group && group.belongs_to(@current_user)
+        if group && group.belongs_to?(@current_user)
           if group.update(update_params)
             render json: group.as_json, status: :ok
           else
@@ -54,6 +48,10 @@ module Api
       private
 
       def create_params
+        params.permit(%i[name description])
+      end
+
+      def update_params
         params.permit(%i[name description])
       end
 
