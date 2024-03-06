@@ -17,7 +17,7 @@ module Api
 
       def create
         if @group.present?
-          result = ::Bunch::Create.call(create_params, group)
+          result = ::Bunch::Create.call(create_params, @group)
           return render json: { errors: result.errors }, status: :bad_request if result.errors.any?
 
           render json: { response: result.bunch.as_json }, status: :ok
