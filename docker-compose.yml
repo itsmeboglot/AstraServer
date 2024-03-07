@@ -12,9 +12,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "3000:3000"
-  server-api:
+  server_api:
     build: .
-    command: "./bin/rails server"
+    command: bundle exec rails s
     environment:
       RAILS_ENV: ${RAILS_ENV}
       POSTGRES_HOST: ${POSTGRES_HOST}
@@ -23,10 +23,22 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
     volumes:
-      - app-storage:/rails/storage
-    depends_on:
+      - bundle_path:/bundle
+    links:
       - db
+  web:
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
+    volumes:
+      - ./web:/nginx/nginx.conf
+    depends_on:
+      - server_api
+    ports:
+      - '443:443'
+      - '80:80'
+    restart: always
 
 volumes:
-  postgres_data: {}
-  app-storage: {}
+  bundle_path:
+  postgres_data:
