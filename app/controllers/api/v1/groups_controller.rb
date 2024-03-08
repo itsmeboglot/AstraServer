@@ -20,7 +20,7 @@ module Api
       def delete #:id
         group = Group.find_by(id: params[:id])
 
-        if group && group.belongs_to(@current_user)
+        if group && group.belongs_to?(@current_user)
           if group.destroy
             render status: :ok
           else
