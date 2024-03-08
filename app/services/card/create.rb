@@ -27,7 +27,7 @@ class Card
 
     def initialize(params, bunch)
       @word = params[:word]
-      @description = params[:definition]
+      @definition = params[:definition]
       @example = params[:example]
       @bunch = bunch
 

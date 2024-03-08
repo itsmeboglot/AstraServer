@@ -4,7 +4,7 @@ class Bunch < ApplicationRecord
   has_many :cards, dependent: :destroy
   validates :name, presence: true
 
-  def belongs_to(group)
+  def belongs_to?(group)
     self.group_id == group.id
   end
 

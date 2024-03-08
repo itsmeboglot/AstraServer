@@ -25,7 +25,11 @@ Rails.application.routes.draw do
         end
 
         # Bunches | /:group_id/bunches
-        resources :bunches, only: %i[index create delete]
+        resources :bunches, only: %i[index create update] do
+          member do
+            delete '/', to: 'bunches#delete'
+          end
+        end
       end
 
       # Cards | /api/v1/bunches/:bunch_id

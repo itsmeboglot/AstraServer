@@ -5,7 +5,7 @@ module Api
     class BunchesController < ApplicationController
 
       before_action :set_group
-      before_action :set_bunch, only: [:delete]
+      before_action :set_bunch, only: [:delete, :update]
 
       # GET /groups/:group_id/bunches
       def index
@@ -16,7 +16,7 @@ module Api
       end
 
       def create
-        if @group.present?
+        if @group.present? && create_params.permitted?
           result = ::Bunch::Create.call(create_params, @group)
           return render json: { errors: result.errors }, status: :bad_request if result.errors.any?
 
@@ -25,12 +25,20 @@ module Api
       end
 
       def update
-
+        if @bunch.present? && update_params.permitted?
+          if @bunch.update(update_params)
+            render json: @bunch.as_json, status: :ok
+          else
+            render json: {error: 'Group update failed'}, status: :unprocessable_entity
+          end
+        else
+          render json: {error: "No such bunch with id <#{params[:id]}>"}, status: :bad_request
+        end
       end
 
       def delete
         if @bunch.present?
-          if group.destroy
+          if @bunch.destroy
             render status: :ok
           else
             render json: { error: 'Problem with deleting group' }, status: :internal_server_error
