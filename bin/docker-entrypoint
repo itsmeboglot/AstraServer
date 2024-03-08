@@ -1,9 +1,10 @@
 #!/bin/bash -e
 
-echo "Executing command: $1"
+echo "Executing entrypoint: $1"
 
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "bundle" ]; then
+  echo 'Executing command: db:prepare'
   ./bin/rails db:prepare
 fi
 
