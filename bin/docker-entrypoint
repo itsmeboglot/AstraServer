@@ -1,8 +1,12 @@
 #!/bin/bash -e
 
+echo "Executing command: $1"
+
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/rails server" ]; then
   ./bin/rails db:prepare
+  ./bin/rails db:migrate
+  ./bin/rails db:seed
 fi
 
 exec "${@}"
